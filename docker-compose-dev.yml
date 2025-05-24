@@ -13,18 +13,18 @@ services:
     networks:
       - app_network
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend
-    ports:
-      - "7777:7777"
-    expose:
-      - "7777"
-    restart: unless-stopped
-    networks:
-      - app_network
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: backend
+  #   ports:
+  #     - "7777:7777"
+  #   expose:
+  #     - "7777"
+  #   restart: unless-stopped
+  #   networks:
+  #     - app_network
 
   nginx:
     build: ./nginx
@@ -35,7 +35,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
-      - backend
+      # - backend
     networks:
       - app_network
 
