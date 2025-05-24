@@ -28,10 +28,10 @@ pipeline {
                 echo "*** [Build Stage] 시작 ***"
                 sh """
                     # Jenkins 컨테이너를 제외한 모든 실행 중인 컨테이너 중지
-                    docker ps -q | grep -v \$(docker ps -q --filter name=jenkins) | xargs -r docker stop
+                    docker ps -q | grep -v \$(docker ps -q --filter name=jenkins-server) | xargs -r docker stop
                     
                     # Jenkins 컨테이너를 제외한 모든 컨테이너 삭제
-                    docker ps -aq | grep -v \$(docker ps -q --filter name=jenkins) | xargs -r docker rm
+                    docker ps -aq | grep -v \$(docker ps -q --filter name=jenkins-server) | xargs -r docker rm
                     
                     # 사용하지 않는 모든 리소스 삭제
                     docker system prune -af
