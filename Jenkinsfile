@@ -2,13 +2,12 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = 'sambungalaxy'
+        DOCKER_IMAGE = 'bless'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
-        GITLAB_CREDENTIALS = credentials('gitlab-token')
     }
     
     triggers {
-        gitlab(
+        githubPush(
             triggerOnPush: true,
             triggerOnMergeRequest: true,
             branchFilterType: 'All'
