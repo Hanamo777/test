@@ -7,11 +7,7 @@ pipeline {
     }
     
     triggers {
-        githubPush(
-            triggerOnPush: true,
-            triggerOnMergeRequest: true,
-            branchFilterType: 'All'
-        )
+        githubPush()
     }
     
     stages {
