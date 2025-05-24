@@ -5,7 +5,6 @@ WORKDIR /app
 
 # 의존성 파일 복사 및 설치
 COPY package.json ./
-COPY package-lock.json ./ # 또는 yarn.lock 파일을 사용한다면 yarn.lock 복사
 
 RUN npm install --frozen-lockfile
 
