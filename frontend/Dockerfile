@@ -1,32 +1,43 @@
-# Stage 1: 프론트엔드 애플리케이션 빌드 (Vite 프로젝트)
+# Stage 1: 빌드
 FROM node:20-alpine as build
 
 WORKDIR /app
 
-# 의존성 파일 복사 및 설치
+# 의존성 파일 복사
 COPY package.json ./
 
-RUN npm install --frozen-lockfile
+# 프로덕션 의존성 설치 (메모리 최적화)
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm install --production --no-audit --no-optional
 
 # 소스 코드 복사
 COPY . .
 
-# Vite 빌드 명령 실행 (기본적으로 'dist' 폴더에 결과물 생성)
+# 빌드
 RUN npm run build
 
-# Stage 2: 빌드된 애플리케이션 서빙 (Node.js 기반 경량 서버)
+# Stage 2: 실행
 FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-# 'serve' 패키지 전역 설치 (정적 파일 서빙용)
+# 보안을 위한 non-root 사용자 생성
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# serve 패키지 설치
 RUN npm install -g serve
 
-# 빌드 스테이지에서 생성된 정적 파일 복사
+# 빌드된 파일 복사
 COPY --from=build /app/dist ./
 
-# Nginx upstream 설정(frontend:5173)과 일치하도록 포트 노출
+# 권한 설정
+RUN chown -R appuser:appgroup /usr/src/app
+
+# non-root 사용자로 전환
+USER appuser
+
 EXPOSE 5173
 
-# 'serve' 명령을 통해 정적 웹 서버 시작
 CMD ["serve", "-s", ".", "-l", "5173"]
