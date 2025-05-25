@@ -1,5 +1,6 @@
 # Stage 1: 빌드
-FROM node:20 as build # node:20-alpine 대신 node:20 사용
+FROM node:20 as build 
+# node:20-alpine 대신 node:20 사용
 
 WORKDIR /app
 
@@ -25,7 +26,8 @@ COPY . .
 RUN npm run build
 
 # Stage 2: 실행
-FROM node:20 # node:20-alpine 대신 node:20 사용
+FROM node:20 
+# node:20-alpine 대신 node:20 사용
 
 WORKDIR /usr/src/app
 
