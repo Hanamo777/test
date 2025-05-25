@@ -22,9 +22,6 @@ FROM nginx:alpine
 # 빌드된 파일 복사
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# nginx 설정 복사
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
