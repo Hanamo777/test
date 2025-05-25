@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package.json ./
 
 # Rollup 빌드를 위한 필수 도구 설치 (Debian 기반 이미지용)
-RUN apt-get update && apt-get install -y python3 make g++ build-essential # 이 줄을 활성화했습니다.
+RUN apt-get update && apt-get install -y python3 make g++ build-essential 
+# 이 줄을 활성화했습니다.
 
 # 모든 의존성 설치 (빌드에 필요한 devDependencies 포함)
 # npm 오류 메시지에 따라 기존 node_modules와 package-lock.json을 먼저 제거
@@ -16,8 +17,7 @@ RUN rm -rf node_modules package-lock.json && \
     npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
-    npm install --no-audit --no-optional && \
-    npm rebuild rollup
+    npm ci  && npm rebuild rollup 
 
 # 소스 코드 복사
 COPY . .
