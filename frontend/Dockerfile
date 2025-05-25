@@ -6,15 +6,16 @@ WORKDIR /app
 # 의존성 파일 복사
 COPY package.json ./
 
+# Rollup 빌드를 위한 필수 도구 설치
+RUN apk add --no-cache python3 make g++
+
 # 모든 의존성 설치 (빌드에 필요한 devDependencies 포함)
 RUN npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
-    npm install --no-audit --no-optional
+    npm install --no-audit --no-optional && \
+    npm rebuild rollup
 
-
-
-    
 # 소스 코드 복사
 COPY . .
 
