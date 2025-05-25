@@ -13,7 +13,7 @@ services:
       - ./frontend/public:/app/public
     environment:
       - NODE_ENV=development
-    command: npm run dev -- --host
+    command: npm run dev -- --host --hmr false
     restart: unless-stopped
     deploy:
       resources:
