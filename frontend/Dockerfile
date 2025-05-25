@@ -6,11 +6,11 @@ WORKDIR /app
 # 의존성 파일 복사
 COPY package.json ./
 
-# 프로덕션 의존성 설치 (메모리 최적화)
+# 모든 의존성 설치 (빌드에 필요한 devDependencies 포함)
 RUN npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
-    npm install --production --no-audit --no-optional
+    npm install --no-audit --no-optional
 
 # 소스 코드 복사
 COPY . .
