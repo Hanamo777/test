@@ -7,8 +7,8 @@ WORKDIR /app
 # 의존성 파일 복사
 COPY package.json ./
 
-# Rollup 빌드를 위한 필수 도구 설치 (Debian 기반 이미지용으로 필요시 추가)
-# RUN apt-get update && apt-get install -y python3 make g++ build-essential
+# Rollup 빌드를 위한 필수 도구 설치 (Debian 기반 이미지용)
+RUN apt-get update && apt-get install -y python3 make g++ build-essential # 이 줄을 활성화했습니다.
 
 # 모든 의존성 설치 (빌드에 필요한 devDependencies 포함)
 # npm 오류 메시지에 따라 기존 node_modules와 package-lock.json을 먼저 제거
