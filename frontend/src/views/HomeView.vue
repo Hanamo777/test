@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>축복 페이지</h1>
+    <h1>CI CD 가 잘 된다는 증거</h1>
     <button @click="$router.push('/test')" class="test-button">테스트 페이지로 이동</button>
   </div>
 </template>

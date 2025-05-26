@@ -1,7 +1,7 @@
 <template>
   <div class="test">
     <h1>테스트 페이지</h1>
-    <p>축복을 위한 페이지입니다.</p>
+    <p>CI CD 가 잘 된다는 것을 보여주는 페이지입니다.</p>
     <button @click="$router.push('/')" class="home-button">홈으로 돌아가기</button>
   </div>
 </template>
