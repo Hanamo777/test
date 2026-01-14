@@ -16,18 +16,43 @@ services:
     networks:
       - app_network
 
-  # backend:
-  #   build:
-  #     context: ./backend
-  #     dockerfile: Dockerfile
-  #   container_name: backend
-  #   ports:
-  #     - "7777:7777"
-  #   expose:
-  #     - "7777"
-  #   restart: unless-stopped
-  #   networks:
-  #     - app_network
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    expose:
+      - "7777"
+    restart: unless-stopped
+    depends_on:
+      - db
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    networks:
+      - app_network
+
+  db:
+    image: mariadb:11.4
+    container_name: db
+    environment:
+      MARIADB_ROOT_PASSWORD: root1234
+      MARIADB_DATABASE: appdb
+      MARIADB_USER: app
+      MARIADB_PASSWORD: app1234
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    expose:
+      - "3306"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    networks:
+      - app_network
 
   nginx:
     build: ./nginx
@@ -37,13 +62,16 @@ services:
       # - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
-      # - backend
+      - backend
     deploy:
       resources:
         limits:
           memory: 512M
     networks:
       - app_network
+
+volumes:
+  db_data:
 
 networks:
   app_network:
