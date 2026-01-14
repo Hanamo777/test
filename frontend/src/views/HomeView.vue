@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>CI CD 가 잘 된다는 증거입니다. 당신을 축복합니다. aws ec2 사용</h1>
+    <h1> 인생은 하나님을 만나는 것. </h1>
     <button @click="$router.push('/test')" class="test-button">테스트 페이지로 이동</button>
   </div>
 </template>
