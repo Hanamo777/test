@@ -17,6 +17,7 @@ public class Post {
     private String content;
 
     @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @PrePersist
